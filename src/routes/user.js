@@ -5,6 +5,9 @@ const router = express.Router();
 const User = require('../model/User');
 const Actors = require('../model/Actors');
 
+
+//to add movie
+
 router.post('/', async(req, res) => {
     console.log("hello");
     const newUser = new User(req.body);
@@ -16,6 +19,8 @@ router.post('/', async(req, res) => {
         res.status(500).send();
     }
 });
+
+//to get all movies
 router.get('/', async(req, res) => {
     console.log("hi");
     try {
@@ -25,6 +30,7 @@ router.get('/', async(req, res) => {
         res.status(404).send({ error: 'Path not found' });
     }
 });
+// to get movie details using ID
 router.get('/:id', async(req, res) => {
     const _id = req.params.id;
     try {
@@ -37,6 +43,8 @@ router.get('/:id', async(req, res) => {
         res.status(500).send({ error: 'Internal server error' });
     }
 });
+
+// to add actors
 router.post('/Actors', async(req, res) => {
     console.log("hell");
     const newActors = new Actors(req.body);
@@ -48,7 +56,7 @@ router.post('/Actors', async(req, res) => {
         res.status(500).send();
     }
 });
-
+// to update actor details using id
 router.patch('/:id', async(req, res) => {
     console.log("hi0");
     const updates = Object.keys(req.body);
@@ -75,6 +83,7 @@ router.patch('/:id', async(req, res) => {
         res.status(500).send({ error: 'Internal server error' });
     }
 });
+//to delete actor details using actor id
 router.delete('/:id', async(req, res) => {
     console.log("log");
     try {
