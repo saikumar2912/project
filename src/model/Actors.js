@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const User = require("./User");
-const ActorsSchema = new Schema({
+const ActorSchema = new Schema({
 
     role: {
         type: String,
         required: true
-    },
+    }
+});
+const ActorsSchema = new Schema({
     actorname: {
         type: String,
         required: true
@@ -14,8 +16,8 @@ const ActorsSchema = new Schema({
     age: {
         type: String,
         required: true
-    }
-
+    },
+    actorss: [ActorSchema]
 
 });
 module.exports = Actors = mongoose.model('Actors', ActorsSchema);
