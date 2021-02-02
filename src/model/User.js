@@ -1,3 +1,5 @@
+
+  
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -31,11 +33,14 @@ const UserSchema = new Schema({
         required: true,
     },
 
-
+actors:{
+    type:Schema.Types.ObjectId,
+    ref:"Actors"
+}
 
 
 
 });
 
 
-module.exports = User = mongoose.model('project', UserSchema);
+module.exports = User = mongoose.model('user', UserSchema)

@@ -22,7 +22,7 @@ router.post('/', async(req, res) => {
 
 //to get all movies
 router.get('/', async(req, res) => {
-    console.log("hi");
+    console.log("hii");
     try {
         const projects = await User.find({});
         res.send(projects);
@@ -45,9 +45,10 @@ router.get('/:id', async(req, res) => {
 });
 
 // to add actors
-router.post('/Actors', async(req, res) => {
+router.post('/:id/Actors', async(req, res) => {
     console.log("hell");
-    const newActors = new Actors(req.body);
+    const newuser = new Actors(req.body);
+    const newActors= await newuser.save();
     try {
         await newActors.save();
         res.status(201).send(newActors);
@@ -58,7 +59,7 @@ router.post('/Actors', async(req, res) => {
 });
 // to update actor details using id
 router.patch('/:id', async(req, res) => {
-    console.log("hi0");
+    console.log("hi");
     const updates = Object.keys(req.body);
     const allowedUpdates = ['actorname', 'age'];
     const isValidOperation = updates.every((update) => {
@@ -91,6 +92,20 @@ router.delete('/:id', async(req, res) => {
         if (!user) {
             return res.status(404).send({ error: 'User not found' });
         }
+        res.send(user);
+    } catch (error) {
+        res.status(500).send({ error: 'Internal server error' });
+    }
+});
+router.get('/Actors/:id', async(req, res) => {
+    console.log("log");
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) {
+
+            return res.status(404).send({ error: 'User not found' });
+        }
+       console.log(user.actors);
         res.send(user);
     } catch (error) {
         res.status(500).send({ error: 'Internal server error' });
