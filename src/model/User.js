@@ -3,6 +3,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// const ActorSchema = new Schema({ 
+
+//     role: {
+//         type: String,
+//         required: true
+//     }
+// })
 const UserSchema = new Schema({
     moviename: {
         type: String,
@@ -32,14 +39,10 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
-
-actors:{
-    type:Schema.Types.ObjectId,
-    ref:"Actors"
-}
-
-
-
+    actors:[{
+        type:Schema.Types.ObjectId,
+        ref:"Actors"
+    }]
 });
 
 

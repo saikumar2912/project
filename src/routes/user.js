@@ -9,8 +9,8 @@ const Actors = require('../model/Actors');
 //to add movie
 
 router.post('/', async(req, res) => {
-    console.log("hello");
     const newUser = new User(req.body);
+    console.log(newUser);
     try {
         await newUser.save();
         res.status(201).send(newUser);
@@ -35,6 +35,7 @@ router.get('/:id', async(req, res) => {
     const _id = req.params.id;
     try {
         const user = await User.findById(_id);
+        console.log(user);
         if (!user) {
             return res.status(404).send({ error: 'movie not found' });
         }
@@ -47,9 +48,12 @@ router.get('/:id', async(req, res) => {
 // to add actors
 router.post('/:id/Actors', async(req, res) => {
     console.log("hell");
+    const newmovie = await User.findById(req.params.id);
     const newuser = new Actors(req.body);
     const newActors= await newuser.save();
     try {
+        console.log(newmovie);
+        console.log(newuser);
         await newActors.save();
         res.status(201).send(newActors);
     } catch (err) {
@@ -89,6 +93,7 @@ router.delete('/:id', async(req, res) => {
     console.log("log");
     try {
         const user = await Actors.findByIdAndDelete(req.params.id);
+        console.log(user);
         if (!user) {
             return res.status(404).send({ error: 'User not found' });
         }
@@ -97,19 +102,37 @@ router.delete('/:id', async(req, res) => {
         res.status(500).send({ error: 'Internal server error' });
     }
 });
-router.get('/Actors/:id', async(req, res) => {
-    console.log("log");
+router.get('/Actors/:moviename', async(req, res) => {
+    
     try {
-        const user = await User.findById(req.params.id);
+        const user = await User.find({name:req.params.moviename}).populate("actors");
+        console.log(user);
         if (!user) {
-
             return res.status(404).send({ error: 'User not found' });
         }
-       console.log(user.actors);
+        
         res.send(user);
     } catch (error) {
         res.status(500).send({ error: 'Internal server error' });
     }
+});
+
+router.post('/:id/addActors', async (req, res) => {
+	const newActors = new Actors(req.body);
+	const userId = req.params.id;
+	try {
+		const user = await User.findById(userId);
+        console.log(user);
+		if (!user) {
+			return res.status(404).send({ error: 'User not found' });
+		}
+		newActors.userId = user.id;
+		await newActors.save();
+		res.status(201).send(newActors);
+        console.log(newActors);
+	} catch (err) {
+		res.status(500).send();
+	}
 });
 
 

@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const User = require("./User");
 const ActorsSchema = new Schema({
-    movie:{
-        type:Schema.Types.ObjectId,
-        ref:"User"
+    users:{
+        type: Schema.Types.ObjectId,
+        ref: 'user'
     },
     actorname: {
         type: String,
